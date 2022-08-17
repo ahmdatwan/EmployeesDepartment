@@ -23,10 +23,7 @@ namespace EmployeesDepartment.API.Repository
             
         }
 
-        public void EditByIdAsync(int id)
-        {
-            
-        }
+        
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {

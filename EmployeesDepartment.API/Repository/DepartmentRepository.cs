@@ -15,6 +15,11 @@ namespace EmployeesDepartment.API.Repository
             return await _context.Department.AnyAsync(department => department.Id == id );
         }
 
+        public async Task<IEnumerable<Employee>> GetEmployees(int id)
+        {
+            return await _context.Employees.Where(employee => employee.DepartmentId == id).ToListAsync();
+        }
+
         public async Task<bool> IsDepartmentEmpty(int id)
         {
             return await _context.Employees.AnyAsync(emp => emp.DepartmentId == id);

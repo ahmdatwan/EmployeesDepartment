@@ -7,5 +7,6 @@ namespace EmployeesDepartment.API.Repository
     {
         Task<bool> DepartmentExists(int id);
         Task<bool> IsDepartmentEmpty(int id);
+        Task<IEnumerable<Employee>> GetEmployees (int id);
     }
 }

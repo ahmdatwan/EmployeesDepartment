@@ -38,6 +38,9 @@ namespace EmployeesDepartment.API.Controllers
         [HttpGet("departmentEmployees/{departmentId}")]
         public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetDepartmentEmployees(int departmentId)
         {
+            var department = await _departmentRepository.GetByIdAsync(departmentId);
+            if (department == null)
+                return NotFound();
             var departmentEmployees = await _employeeRepository.GetDepartmentEmployees(departmentId);
             return Ok(_mapper.Map<IEnumerable<EmployeeDTO>>(departmentEmployees));
         }

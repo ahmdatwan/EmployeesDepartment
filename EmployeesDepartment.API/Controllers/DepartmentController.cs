@@ -84,14 +84,26 @@ namespace EmployeesDepartment.API.Controllers
         public async Task<ActionResult> DeleteDepartment(int departmentId)
         {
             var departmentToDelete = await _departmentRepository.GetByIdAsync(departmentId);
-            if (departmentToDelete == null  )
+            if (departmentToDelete == null)
                 return NotFound();
-           
-           
+            var departmentEmployees = await _departmentRepository.GetEmployees(departmentId);
+            if (departmentEmployees.Any())
+            {
+                return NotFound();
+            }
             _departmentRepository.DeleteAsync(departmentToDelete);
             await _departmentRepository.SaveChangesAsync();
             return NoContent();
 
+        }
+        [HttpGet("getAllEmployees/{departmentId}")]
+        public async Task<ActionResult<IEnumerable<EmployeeDTO>>> GetDepartmentEmployees(int departmentId)
+        {
+            var department = await _departmentRepository.GetByIdAsync(departmentId);
+            if (department == null)
+                return NotFound();
+            var departmentEmployees = await _departmentRepository.GetEmployees(departmentId);
+            return Ok(_mapper.Map<IEnumerable<EmployeeDTO>>(departmentEmployees));
         }
 
 
